@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="form-signin">
+    <h1>Registro</h1>
+
+    <% if @message != nil %>
+    <div class="alert alert-danger" >
+      <strong>Ops!</strong> <span><%= @message%></span>
+    </div>
+    <% end %>
+    <%= form_for(:user, :html => {:id => "laForma"}) do |f| %>
+
+        <div class="form-group">
+          <%= f.label :'Nombre completo' %>
+          <%= f.text_field :name, class: 'form-control', placeholder: "Nombre completo" , 'data-required' => "required" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :'Correo electronico' %>
+          <%= f.email_field :email, class: 'form-control', placeholder: "Correo electronico" , 'data-required' => "required" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :'RFC' %>
+          <%= f.text_field :rfc, class: 'form-control', placeholder: "RFC" , 'data-required' => "required" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :'Empresa' %>
+          <%= f.text_field :company, class: 'form-control', placeholder: "Empresa" , 'data-required' => "required" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :'Contraseña' %>
+          <%= f.password_field :password, class: 'form-control', placeholder: "Contraseña", id: 'password' , 'data-required' => "required" %>
+        </div>
+        <div class="form-group">
+          <label for="user_Confirmar contraseña">Confirmar contraseña</label>
+          <input class="form-control" id="repassword" placeholder="***" type="password">
+        </div>
+        <div class="alert alert-danger" style="display:none;">
+          <strong>Ops!</strong> <span></span>
+        </div>
+
+        <%= f.submit 'Registrar',
+                     class: "btn btn-lg btn-primary" %>
+
+
+    <% end %>
+  </div>
+</div>
+
+
+<script>
+
+  jQuery(document).ready( () => {
+
+    var $form = jQuery("#laForma")
+
+    $form.submit((e) => {
+
+      var isValidate = utils.checkForm($form)
+
+      if (isValidate) {
+        var repass = $form.find('#repassword')
+        var pass = $form.find('#password')
+
+        if ( repass.val() !== pass.val()) {
+          isValidate = false
+          repass.parent('.form-group').addClass('has-error')
+          pass.parent('.form-group').addClass('has-error')
+
+          utils.showError($form, isValidate, 'Las Contraseñas no coinciden')
+        }
+      }
+
+
+
+      return isValidate
+    })
+
+  })
+
+
+</script>

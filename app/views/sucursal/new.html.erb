@@ -1,0 +1,146 @@
+<div class="container">
+  <div class="form-sucursal">
+    <h1>Sucursal</h1>
+
+    <% if @message != nil %>
+    <div class="alert alert-danger" >
+      <strong>Ops!</strong> <span><%= @message%></span>
+    </div>
+    <% end %>
+
+    <%= form_for(:sucursal, :html => {:id => "laForma"}) do |f| %>
+        &nbsp
+        <div class="form-group ">
+          <div class="alert alert-danger" style="display:none;">
+            <strong>Ops!</strong> <span></span>
+          </div>
+        </div>
+        <div class="form-group col-xs-6">
+          <%= f.label :'Nombre' %>
+          <%= f.text_field :nombre, value: @l_sucursal.nombre, class: 'form-control', placeholder: "Nombre", 'data-required' => "required" %>
+        </div>
+
+        <div class="form-group col-xs-6">
+          <%= f.label :'Calle' %>
+          <%= f.text_field :calle, value: @l_sucursal.calle, class: 'form-control', placeholder: "Calle" %>
+        </div>
+        <div class="form-group col-xs-6">
+          <%= f.label :'Colonia' %>
+          <%= f.text_field :colonia, value: @l_sucursal.colonia, class: 'form-control', placeholder: "Colonia" %>
+        </div>
+        <div class="form-group col-xs-6">
+          <%= f.label :'Num. Exterior' %>
+          <%= f.number_field :numeroExterior, value: @l_sucursal.numeroExterior, class: 'form-control', placeholder: "Num. Exterior" %>
+        </div>
+        <div class="form-group col-xs-6">
+          <%= f.label :'Num. Interior' %>
+          <%= f.number_field :numeroInterior, value: @l_sucursal.numeroInterior, class: 'form-control', placeholder: "Num. Interior" %>
+        </div>
+        <div class="form-group col-xs-6">
+          <%= f.label :'Código postal' %>
+          <%= f.number_field :codigoPostal, value: @l_sucursal.codigoPostal, class: 'form-control', placeholder: "Código postal" %>
+        </div>
+        <div class="form-group col-xs-6">
+          <%= f.label :'Ciudad' %>
+          <%= f.text_field :ciudad, value: @l_sucursal.ciudad, class: 'form-control', placeholder: "Ciudad" %>
+        </div>
+        <div class="form-group col-xs-6">
+          <%= f.label :'País' %>
+          <%= f.text_field :pais, value: @l_sucursal.pais, class: 'form-control', placeholder: "País" %>
+        </div>
+
+
+
+        <h4> Empleados</h4>
+        <% if @l_sucursal.id == nil %>
+           <% for i in 0..4 do %>
+              <div class="well col-xs-6">
+                <strong>Empleado #<%= i+1 %></strong>
+                <div class="form-group">
+                  <%= f.label :'Nombre' %>
+                  <%= f.text_field "empleados["+i.to_s+"][nombre]",class: 'form-control', placeholder: "Nombre" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :'Puesto' %>
+                  <%= f.text_field "empleados["+i.to_s+"][puesto]",class: 'form-control', placeholder: "Puesto" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :'RFC' %>
+                  <%= f.text_field "empleados["+i.to_s+"][rfc]",class: 'form-control', placeholder: "RFC" %>
+                </div>
+              </div>
+           <%  end %>
+       <% else %>
+
+            <% if @l_sucursal.empleados.empty?%>
+              <p>Sin empleados</p>
+            <% else %>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                      <th>Nombre</th>
+                      <th>RFC</th>
+                      <th>Puesto</th>
+                      <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% @l_sucursal.empleados.each do |emp| %>
+                    <tr>
+                      <td><%= emp.nombre %></td>
+                      <td><%= emp.rfc %></td>
+                      <td><%= emp.puesto %></td>
+                      <td><%= link_to 'Editar', edit_empleado_path(emp)  %></td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+          <%  end %>
+        <%  end %>
+
+
+
+
+
+        <%= link_to 'Atras', '/',
+                    { :class=>"btn btn-lg btn-default", style: "position: fixed; right: 125px; bottom: 15px;"}
+        %>
+        <%= f.submit 'Guardar',
+                     class: "btn btn-lg btn-primary", style: "position: fixed; right: 11px; bottom: 15px;" %>
+
+
+    <% end %>
+  </div>
+</div>
+
+
+<script>
+
+  jQuery(document).ready( () => {
+
+    var $form = jQuery("#laForma")
+
+    $form.submit((e) => {
+
+      var isValidate = utils.checkForm($form)
+
+      if (isValidate) {
+        var repass = $form.find('#repassword')
+        var pass = $form.find('#password')
+
+        if ( repass.val() !== pass.val()) {
+          isValidate = false
+          repass.parent('.form-group').addClass('has-error')
+          pass.parent('.form-group').addClass('has-error')
+
+          utils.showError($form, isValidate, 'Las Contraseñas no coinciden')
+        }
+      }
+
+      return isValidate
+    })
+
+  })
+
+
+</script>

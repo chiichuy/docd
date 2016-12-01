@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="form-sucursal">
+    <h1>Emplaedo</h1>
+
+    <% if @message != nil %>
+    <div class="alert alert-danger" >
+      <strong>Ops!</strong> <span><%= @message%></span>
+    </div>
+    <% end %>
+
+    <%= form_for(:empleado, :html => {:id => "laForma"}) do |f| %>
+        &nbsp
+        <div class="form-group ">
+          <div class="alert alert-danger" style="display:none;">
+            <strong>Ops!</strong> <span></span>
+          </div>
+        </div>
+        <div class="form-group col-xs-6">
+          <%= f.label :'Nombre' %>
+          <%= f.text_field :nombre, value: @l_empleado.nombre, class: 'form-control', placeholder: "Nombre", 'data-required' => "required" %>
+        </div>
+
+        <div class="form-group col-xs-6">
+          <%= f.label :'Puesto' %>
+          <%= f.text_field :puesto, value: @l_empleado.puesto, class: 'form-control', placeholder: "Puesto" %>
+        </div>
+        <div class="form-group col-xs-6">
+
+          <%= f.label :'RFC' %>
+          <%= f.text_field :rfc, value: @l_empleado.rfc, class: 'form-control', placeholder: "RFC", readonly: (@l_empleado.id != nil) , 'data-required' => "required" %>
+        </div>
+
+        <div class="form-group col-xs-6">
+          <% sucursales_array = @l_sucursales.all.map { |suc| [suc.nombre, suc.id] } %>
+          <%= f.label :'Num. Exterior' %>
+          <%= f.select(:sucursal_id, options_for_select(sucursales_array, @l_empleado.sucursal_id),{}, {:class => 'form-control'}) %>
+        </div>
+
+
+
+        <%= link_to 'Atras (sin historial)', "/",
+                    { :class=>"btn btn-lg btn-default", style: "position: fixed; right: 125px; bottom: 15px;"}
+        %>
+        <%= f.submit 'Guardar',
+                     class: "btn btn-lg btn-primary", style: "position: fixed; right: 11px; bottom: 15px;" %>
+
+
+    <% end %>
+  </div>
+</div>
+
+
+<script>
+
+  jQuery(document).ready( () => {
+
+    var $form = jQuery("#laForma")
+
+    $form.submit((e) => {
+
+      var isValidate = utils.checkForm($form)
+
+
+      return isValidate
+    })
+
+  })
+
+
+</script>

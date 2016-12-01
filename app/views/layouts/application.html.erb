@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Docd</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<% if @user != nil %>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+      <span class="navbar-brand" >
+        <strong><%= @user.name %></strong> - [ <%= @user.company %> ]
+      </span>
+
+          <%= link_to 'Registrar Sucursal', new_sucursal_path, :class=>'btn btn-default navbar-btn' %>
+          <%= link_to 'Registrar Empleado', new_empleado_path, :class=>'btn btn-default navbar-btn' %>
+
+
+          <p class="navbar-text navbar-right navbar-custom"><%= link_to 'Sign out', '/signout' %></p>
+        </div>
+      </div>
+    </nav>
+  <% end %>
+<%= yield %>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="form-signin">
+    <h1>Iniciar sesión</h1>
+    <% if @message != nil %>
+        <div class="alert alert-danger" >
+          <strong>Ops!</strong> <span><%= @message%></span>
+        </div>
+    <% end %>
+    <%= form_for(:user, :html => {:id => "loginForm"}) do |f|  %>
+      <div class="form-group">
+      <%= f.label :'Correo electronico' %>
+      <%= f.email_field :email, class: 'form-control', 'data-required' => "required" %>
+      </div>
+      <div class="form-group">
+      <%= f.label :'Contraseña' %>
+      <%= f.password_field :password, class: 'form-control', 'data-required' => "required" %>
+      </div>
+    <%= f.submit 'Iniciar sesión',
+                  class: "btn btn-lg btn-primary" %>
+    <%= link_to 'Registrar', 'signup',
+                { :class=>"btn btn-lg btn-default"}
+    %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  jQuery(document).ready( () => {
+    $form = jQuery("#loginForm")
+
+    $form.submit( (e) => {
+      var isValid = utils.checkForm($form)
+      return isValid
+    })
+
+
+  })
+</script>
