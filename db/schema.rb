@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20161130101100) do
     t.datetime "updated_at"
   end
 
-  add_index "empleados", ["sucursal_id"], name: "index_empleados_on_sucursal_id"
+  add_index "empleados", ["sucursal_id"], name: "index_empleados_on_sucursal_id", using: :btree
 
   create_table "sucursals", force: true do |t|
     t.string   "nombre"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20161130101100) do
     t.datetime "updated_at"
   end
 
-  add_index "sucursals", ["user_id"], name: "index_sucursals_on_user_id"
+  add_index "sucursals", ["user_id"], name: "index_sucursals_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -50,6 +50,6 @@ ActiveRecord::Schema.define(version: 20161130101100) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
 end
