@@ -13,19 +13,20 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
-  username: root
+  username: sql3147262
+  password: ABMhEY9tI8
   socket: /tmp/mysql.sock
-
+  host: sql3.freemysqlhosting.net
 development:
   <<: *default
-  database: myapp_development
+  database: sql3147262
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: myapp_test
+  database: sql3147262
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
