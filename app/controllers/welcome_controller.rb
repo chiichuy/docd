@@ -28,7 +28,15 @@ class WelcomeController < ApplicationController
       return
     end
 
-    user = User.find(session[:currentUser])
+
+    begin
+      user = User.find(session[:currentUser])
+    rescue Exception => ex
+      session[:currentUser] = nil
+      redirect_to '/'
+      return
+    end
+
     print("#####")
     print(user.sucursals.count())
     print("#######")
